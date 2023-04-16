@@ -4305,7 +4305,7 @@ class OOMDisplay:
     def __init__(self):
         self.oom = None
         self.set_html_defaults()
-        self.update_toc()
+#        self.update_toc()
 
         element = document.getElementById("version")
         element.textContent = "v{}".format(VERSION)
@@ -4352,27 +4352,27 @@ class OOMDisplay:
         if DEBUG:
             show_element("notify_box")
 
-    def update_toc(self):
-        """
-        Update the TOC to show current headlines only
-
-        There are two conditions to show a h2 headline in TOC:
-         * the headline is visible
-         * the id attribute is set
-        """
-        new_toc = ""
-
-        toc_content = document.querySelectorAll("nav > ul")[0]
-
-        for element in document.querySelectorAll("h2"):
-            if not (is_visible(element) and element.id):
-                continue
-
-            new_toc += '<li><a href="#{}">{}</a></li>'.format(
-                element.id, element.textContent
-            )
-
-        toc_content.innerHTML = new_toc
+#    def update_toc(self):
+#        """
+#        Update the TOC to show current headlines only
+#
+#        There are two conditions to show a h2 headline in TOC:
+#         * the headline is visible
+#         * the id attribute is set
+#        """
+#        new_toc = ""
+#
+#        toc_content = document.querySelectorAll("nav > ul")[0]
+#
+#        for element in document.querySelectorAll("h2"):
+#            if not (is_visible(element) and element.id):
+#                continue
+#
+#            new_toc += '<li><a href="#{}">{}</a></li>'.format(
+#                element.id, element.textContent
+#            )
+#
+#        toc_content.innerHTML = new_toc
 
     def _show_pstable(self):
         """
@@ -4514,7 +4514,7 @@ class OOMDisplay:
     def reset_form(self):
         document.getElementById("textarea_oom").value = ""
         self.set_html_defaults()
-        self.update_toc()
+#        self.update_toc()
 
     def toggle_oom(self, show=False):
         """Toggle the visibility of the full OOM message"""
@@ -4541,7 +4541,7 @@ class OOMDisplay:
         if success:
             self.oom_result = analyser.oom_result
             self.show_oom_details()
-            self.update_toc()
+#            self.update_toc()
 
     def load_from_form(self):
         """
