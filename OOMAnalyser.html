@@ -512,7 +512,7 @@ window.onerror = function (msg, url, lineNo, columnNo, errorObj) {
 <!-- END of openSUSE navbar -->
 
 <div class="flex-fill py-5">
-<div class="container">
+<div class="container" style="max-width:80%"> <!-- override width for readability -->
 <div class="row">
 <div class="col-lg-9 toc-scope">
 
@@ -541,8 +541,6 @@ window.onerror = function (msg, url, lineNo, columnNo, errorObj) {
     <br/>
     <button onclick="OOMAnalyser.OOMDisplayInstance.analyse_and_show()" title="Analyse the OOM from the input area and show it" type="button">Analyse<br>OOM block</button>
     <button onclick="OOMAnalyser.OOMDisplayInstance.reset_form()" title="Clean the input area" type="reset">Reset<br>form</button>
-</div>
-<div>
     <button onclick="OOMAnalyser.OOMDisplayInstance.copy_example_tumbleweed_swap_to_form()" title="Copy an example OOM trace from Tumbleweed w/ swap into the input area" type="button">
         Insert Tumbleweed example<br>swap enabled
     </button>
