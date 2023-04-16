@@ -293,12 +293,13 @@ class BaseKernelConfig:
             True,
         ),
         "Overall Mem-Info (part 2)": (
-            r"^ slab_reclaimable:(?P<slab_reclaimable_pages>\d+) slab_unreclaimable:(?P<slab_unreclaimable_pages>\d+)"
+            r"slab_reclaimable:(?P<slab_reclaimable_pages>\d+) slab_unreclaimable:(?P<slab_unreclaimable_pages>\d+)"
             r"(?:\n)"
-            r"^ mapped:(?P<mapped_pages>\d+) shmem:(?P<shmem_pages>\d+) pagetables:(?P<pagetables_pages>\d+) "
-            r"bounce:(?P<bounce_pages>\d+)"
+            r" +mapped:(?P<mapped_pages>\d+) shmem:(?P<shmem_pages>\d+) pagetables:(?P<pagetables_pages>\d+) bounce:(?P<bounce_pages>\d+)"
             r"(?:\n)"
-            r"^ free:(?P<free_pages>\d+) free_pcp:(?P<free_pcp_pages>\d+) free_cma:(?P<free_cma_pages>\d+)",
+            r" +kernel_misc_reclaimable:(?P<kernel_misc_reclaimable>\d+)"
+            r"(?:\n)"
+            r" +free:(?P<free_pages>\d+) free_pcp:(?P<free_pcp_pages>\d+) free_cma:(?P<free_cma_pages>\d+)",
             True,
         ),
         "Available memory chunks": (
@@ -2583,15 +2584,13 @@ class KernelConfig_6_1(KernelConfig_6_0):
 
     EXTRACT_PATTERN_OVERLAY_61 = {
         "Overall Mem-Info (part 2)": (
-            r"^ slab_reclaimable:(?P<slab_reclaimable_pages>\d+) slab_unreclaimable:(?P<slab_unreclaimable_pages>\d+)"
+            r" +slab_reclaimable:(?P<slab_reclaimable_pages>\d+) slab_unreclaimable:(?P<slab_unreclaimable_pages>\d+)"
             r"(?:\n)"
-            r"^ mapped:(?P<mapped_pages>\d+) shmem:(?P<shmem_pages>\d+) pagetables:(?P<pagetables_pages>\d+)"
+            r" +mapped:(?P<mapped_pages>\d+) shmem:(?P<shmem_pages>\d+) pagetables:(?P<pagetables_pages>\d+) bounce:(?P<bounce_pages>\d+)"
             r"(?:\n)"
-            r"^ sec_pagetables:(?P<sec_pagetables>\d+) bounce:(?P<bounce_pages>\d+)"
+            r" +kernel_misc_reclaimable:(?P<kernel_misc_reclaimable>\d+)"
             r"(?:\n)"
-            r"^ kernel_misc_reclaimable:(?P<kernel_misc_reclaimable>\d+)"
-            r"(?:\n)"
-            r"^ free:(?P<free_pages>\d+) free_pcp:(?P<free_pcp_pages>\d+) free_cma:(?P<free_cma_pages>\d+)",
+            r" +free:(?P<free_pages>\d+) free_pcp:(?P<free_pcp_pages>\d+) free_cma:(?P<free_cma_pages>\d+)",
             True,
         ),
     }
