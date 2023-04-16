@@ -273,7 +273,7 @@ class BaseKernelConfig:
         "Trigger process and kernel version": (
             r"^CPU: \d+ PID: (?P<trigger_proc_pid>\d+) "
             r"Comm: .* (Not tainted|Tainted:.*) "
-            r"(?P<kernel_version>\d[\w.-]+) #\d",
+            r"(?P<kernel_version>\d[\w.-]+) (?:#\d) (?P<distribution>\w+ \w+).+",
             True,
         ),
         # split caused by a limited number of iterations during converting PY regex into JS regex
@@ -2975,7 +2975,7 @@ class OOMAnalyser:
     """
 
     REC_KERNEL_VERSION = re.compile(
-        r"CPU: \d+ PID: \d+ Comm: .* (Not tainted|Tainted: [A-Z ]+) (?P<kernel_version>\d[\w.-]+) #.+"
+        r"CPU: \d+ PID: \d+ Comm: .* (Not tainted|Tainted: [A-Z ]+) (?P<kernel_version>\d[\w.-]+) (?:#\d) (?P<distribution>\w+ \w+).+"
     )
     """RE to match the OOM line with kernel version"""
 
@@ -3662,13 +3662,17 @@ class OOMAnalyser:
     def _determinate_platform_and_distribution(self):
         """Determinate platform and distribution"""
         kernel_version = self.oom_result.details.get("kernel_version", "")
+        distribution = self.oom_result.details.get("distribution", None)
         if "x86_64" in kernel_version:
             self.oom_result.details["platform"] = "x86 64bit"
         else:
             self.oom_result.details["platform"] = "unknown"
 
         dist = "unknown"
-        if ".el7uek" in kernel_version:
+        if distribution is not None:
+            # this should work on openSUSE
+            dist = distribution
+        elif ".el7uek" in kernel_version:
             dist = "Oracle Linux 7 (Unbreakable Enterprise Kernel)"
         elif ".el7" in kernel_version:
             dist = "RHEL 7/CentOS 7"
