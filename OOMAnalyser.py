@@ -4540,6 +4540,7 @@ class OOMDisplay:
         if success:
             self.oom_result = analyser.oom_result
             self.show_oom_details()
+            scroll(0,0)
 #            self.update_toc()
 
     def load_from_form(self):
