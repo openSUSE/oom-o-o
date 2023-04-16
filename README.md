@@ -1,11 +1,10 @@
-# OOMAnalyser
-
-[![builds.sr.ht status](https://builds.sr.ht/~carstengrohmann/OOMAnalyser.svg)](https://builds.sr.ht/~carstengrohmann/OOMAnalyser?)
-
+# openSUSE OOMAnalyser
 
 ## Introduction
 
-OOMAnalyser is a small project to transform the OOM message of a Linux kernel into a more user-friendly format.
+This is a forked version of [Carsten Grohmann's OOMAnalyser](https://git.sr.ht/~carstengrohmann/OOMAnalyser) targeting SUSE based operating systems.
+
+It is a small project to transform the OOM message of a Linux kernel into a more user-friendly format.
 
 OOMAnalyser consists of a web page into whose input field the OOM message is copied. JavaScript code extracts the data
 from it and displays the details. All processing takes place in the browser. No data is transferred to external servers.
