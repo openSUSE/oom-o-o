@@ -4057,223 +4057,218 @@ class OOMDisplay:
     @rtype: OOMResult
     """
 
-    example_rhel7 = """\
-sed invoked oom-killer: gfp_mask=0x201da, order=0, oom_score_adj=0
-sed cpuset=/ mems_allowed=0-1
-CPU: 4 PID: 29481 Comm: sed Not tainted 3.10.0-514.6.1.el7.x86_64 #1
-Hardware name: HP ProLiant DL385 G7, BIOS A18 12/08/2012
- ffff880182272f10 00000000021dcb0a ffff880418207938 ffffffff816861ac
- ffff8804182079c8 ffffffff81681157 ffffffff810eab9c ffff8804182fe910
- ffff8804182fe928 0000000000000202 ffff880182272f10 ffff8804182079b8
-Call Trace:
- [<ffffffff816861ac>] dump_stack+0x19/0x1b
- [<ffffffff81681157>] dump_header+0x8e/0x225
- [<ffffffff810eab9c>] ? ktime_get_ts64+0x4c/0xf0
- [<ffffffff8113ccaf>] ? delayacct_end+0x8f/0xb0
- [<ffffffff8118475e>] oom_kill_process+0x24e/0x3c0
- [<ffffffff811841fd>] ? oom_unkillable_task+0xcd/0x120
- [<ffffffff811842a6>] ? find_lock_task_mm+0x56/0xc0
- [<ffffffff810937ee>] ? has_capability_noaudit+0x1e/0x30
- [<ffffffff81184f96>] out_of_memory+0x4b6/0x4f0
- [<ffffffff81681c60>] __alloc_pages_slowpath+0x5d7/0x725
- [<ffffffff8118b0a5>] __alloc_pages_nodemask+0x405/0x420
- [<ffffffff811cf25a>] alloc_pages_current+0xaa/0x170
- [<ffffffff81180667>] __page_cache_alloc+0x97/0xb0
- [<ffffffff811831b0>] filemap_fault+0x170/0x410
- [<ffffffffa018f016>] ext4_filemap_fault+0x36/0x50 [ext4]
- [<ffffffff811ac2ec>] __do_fault+0x4c/0xc0
- [<ffffffff811ac783>] do_read_fault.isra.42+0x43/0x130
- [<ffffffff811b0f11>] handle_mm_fault+0x6b1/0xfe0
- [<ffffffff811b7825>] ? do_mmap_pgoff+0x305/0x3c0
- [<ffffffff81691c94>] __do_page_fault+0x154/0x450
- [<ffffffff81691fc5>] do_page_fault+0x35/0x90
- [<ffffffff8168e288>] page_fault+0x28/0x30
-Mem-Info:
-active_anon:7355653 inactive_anon:660960 isolated_anon:0#012 active_file:1263 inactive_file:1167 isolated_file:32#012 unevictable:0 dirty:4 writeback:0 unstable:0#012 slab_reclaimable:27412 slab_unreclaimable:13708#012 mapped:4818 shmem:87896 pagetables:25222 bounce:0#012 free:39513 free_pcp:2958 free_cma:0
-Node 0 DMA free:15872kB min:40kB low:48kB high:60kB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB present:15992kB managed:15908kB mlocked:0kB dirty:0kB writeback:0kB mapped:0kB shmem:0kB slab_reclaimable:0kB slab_unreclaimable:0kB kernel_stack:0kB pagetables:0kB unstable:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB writeback_tmp:0kB pages_scanned:0 all_unreclaimable? yes
-lowmem_reserve[]: 0 2780 15835 15835
-Node 0 DMA32 free:59728kB min:7832kB low:9788kB high:11748kB active_anon:2154380kB inactive_anon:604748kB active_file:500kB inactive_file:112kB unevictable:0kB isolated(anon):0kB isolated(file):0kB present:3094644kB managed:2848912kB mlocked:0kB dirty:0kB writeback:0kB mapped:4016kB shmem:5140kB slab_reclaimable:6448kB slab_unreclaimable:2796kB kernel_stack:1040kB pagetables:6876kB unstable:0kB bounce:0kB free_pcp:3788kB local_pcp:228kB free_cma:0kB writeback_tmp:0kB pages_scanned:28 all_unreclaimable? no
-lowmem_reserve[]: 0 0 13055 13055
-Node 0 Normal free:36692kB min:36784kB low:45980kB high:55176kB active_anon:12301636kB inactive_anon:793132kB active_file:604kB inactive_file:176kB unevictable:0kB isolated(anon):0kB isolated(file):128kB present:13631488kB managed:13368348kB mlocked:0kB dirty:0kB writeback:0kB mapped:4108kB shmem:207940kB slab_reclaimable:47900kB slab_unreclaimable:28884kB kernel_stack:6624kB pagetables:43340kB unstable:0kB bounce:0kB free_pcp:4204kB local_pcp:640kB free_cma:0kB writeback_tmp:0kB pages_scanned:128 all_unreclaimable? no
-lowmem_reserve[]: 0 0 0 0
-Node 1 Normal free:49436kB min:45444kB low:56804kB high:68164kB active_anon:14967844kB inactive_anon:1244560kB active_file:1552kB inactive_file:1992kB unevictable:0kB isolated(anon):0kB isolated(file):0kB present:16777212kB managed:16514220kB mlocked:0kB dirty:16kB writeback:0kB mapped:10760kB shmem:138504kB slab_reclaimable:55300kB slab_unreclaimable:23152kB kernel_stack:6176kB pagetables:50672kB unstable:0kB bounce:0kB free_pcp:3360kB local_pcp:248kB free_cma:0kB writeback_tmp:0kB pages_scanned:125777 all_unreclaimable? yes
-lowmem_reserve[]: 0 0 0 0
-Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 2*64kB (U) 1*128kB (U) 1*256kB (U) 0*512kB 1*1024kB (U) 1*2048kB (M) 3*4096kB (M) = 15872kB
-Node 0 DMA32: 203*4kB (UEM) 231*8kB (UEM) 259*16kB (UEM) 231*32kB (UEM) 157*64kB (UEM) 90*128kB (UEM) 49*256kB (UEM) 20*512kB (UE) 3*1024kB (UEM) 1*2048kB (M) 0*4096kB = 63668kB
-Node 0 Normal: 1231*4kB (UEM) 391*8kB (UEM) 456*16kB (UEM) 342*32kB (UEM) 141*64kB (UEM) 23*128kB (UEM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 38260kB
-Node 1 Normal: 2245*4kB (UEM) 732*8kB (UEM) 594*16kB (UEM) 396*32kB (UEM) 160*64kB (UEM) 16*128kB (UEM) 2*256kB (UM) 0*512kB 1*1024kB (M) 0*2048kB 0*4096kB = 50836kB
-Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
-Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
-Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
-Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
-100155 total pagecache pages
-11342 pages in swap cache
-Swap cache stats: add 31260615, delete 31249273, find 295999950/297583545
-Free swap  = 0kB
-Total swap = 8388604kB
-8379834 pages RAM
-0 pages HighMem/MovableOnly
-192987 pages reserved
-[ pid ]   uid  tgid total_vm      rss nr_ptes swapents oom_score_adj name
-[  390]     0   390    39012     6739      78       51             0 systemd-journal
-[  433]     0   433    11104        2      22      360         -1000 systemd-udevd
-[  530]     0   530    13854       28      27       83         -1000 auditd
-[  559]     0   559     7692       65      19       87             0 systemd-logind
-[  563]     0   563     4817       41      14       36             0 irqbalance
-[  569]    87   569     7684       52      20       48          -900 dbus-daemon
-[  587]    32   587    16240       17      34      116             0 rpcbind
-[  647]     0   647    50303       11      36      113             0 gssproxy
-[  796]     0   796   193856     2897     207      112             0 rsyslogd
-[  818]     0   818    13177        0      27      146             0 vsftpd
-[  840]     0   840    62892        9      36      103             0 ypbind
-[  868]     0   868    21663       28      43      191         -1000 sshd
-[  871]    29   871    11126        2      25      222             0 rpc.statd
-[  907]     0   907     8044        4      21       53             0 atd
-[  916]     0   916    27509        2      10       30             0 agetty
-[  934]     0   934    27509        2      10       31             0 agetty
-[ 1255]     0  1255    45716        1      39      337             0 rscd
-[ 1268]     0  1268    45746       28      38      353             0 rscd
-[ 1269]     0  1269    45716       29      38      311             0 rscd
-[ 1285]     0  1285    23290       25      45      235             0 master
-[ 1287]    89  1287    23379       52      47      242             0 qmgr
-[ 1830]     0  1830   446643      959      68     1234             0 ovcd
-[ 2062]     0  2062   144894      511      37      309             0 ovbbccb
-[ 2121]     0  2121    33138       26      19      138             0 crond
-[ 2136]    38  2136     7846       40      19       88             0 ntpd
-[ 2451]     0  2451   177827        0      36      816             0 ovconfd
-[ 8145]     0  8145   300303     1616      58      692             0 hpsensor
-[ 8204]     0  8204    31508      119      31      328             0 opcmsgi
-[ 8405]     0  8405   201479     1289      49      244             0 opcmsga
-[ 8472]     0  8472   134080      236      46      514             0 opcmona
-[ 8596]     0  8596    31377      172      29      301             0 opcle
-[ 8658]     0  8658    81199      124      34      336             0 opcacta
-[ 8685]     0  8685   137169    23313      97     3256             0 oacore
-[ 6330] 12345  6330     7520       15      18       61             0 rotatelogs
-[ 6331] 12345  6331    28318        0      12       83             0 run.sh
-[ 6576] 12345  6576  8478546  5157063   15483  1527848             0 mysqld
-[27171] 12345 27171     7522       10      18       58             0 rotatelogs
-[27172] 12345 27172    28320        3      11       94             0 run.sh
-[27502] 12345 27502  4029300  2716569    6505   226225             0 java
-[11729]     0 11729    64122     5003      79     2465             0 snmpd
-[12130]     0 12130   122202      565      29      175             0 hpasmlited
-[12166]     0 12166    11905       89      24      121             0 cmahealthd
-[12190]     0 12190    11871       89      24      119             0 cmastdeqd
-[12214]     0 12214    13707       84      31      211             0 cmahostd
-[12237]     0 12237    12493       38      28      352             0 cmathreshd
-[12276]     0 12276    12368       45      30      210             0 cmasm2d
-[12299]     0 12299    12485       43      26      282             0 cmaperfd
-[12324]     0 12324    31932      184      31      143             0 cmapeerd
-[12352]     0 12352    14280       48      32      169             0 cmaeventd
-[12379]     0 12379    14831       26      30      198             0 cmafcad
-[12407]     0 12407    11806       12      25      128             0 cmasasd
-[12436]     0 12436    14364       86      31      181             0 cmaidad
-[12463]     0 12463    11288       15      25      125             0 cmaided
-[12492]     0 12492    11805       14      26      127             0 cmascsid
-[12523]     0 12523    92228      129      63      433             0 cmanicd
-[14002]     0 14002    11803       12      25      128             0 cmasm2d
-[32615]     0 32615    36254      323      73        7             0 sshd
-[  894] 12345   894    36254      328      70        5             0 sshd
-[  895] 12345   895     3389      123      11        0             0 ksh
-[10620]     0 10620    36254      328      72        0             0 sshd
-[10634] 38714 10634    36290      329      70        8             0 sshd
-[10635] 38714 10635    14221       25      31      124             0 sftp-server
-[29021]     0 29021    36254      314      69        0             0 sshd
-[29025] 12345 29025    36254      316      67        0             0 sshd
-[29026] 12345 29026    29286       96      12        1             0 ksh
-[29051] 12345 29051    29494      330      12       74             0 svr05
-[29979] 12345 29979     1666       42       9        0             0 less
-[29662]    89 29662    23316      258      43        0             0 pickup
-[26065]    89 26065    23317      256      45        0             0 trivial-rewrite
-[26066]    89 26066    23353      265      45        0             0 cleanup
-[26067]    89 26067    23368      271      45        0             0 smtp
-[26743]     0 26743    36254      314      68        0             0 sshd
-[26937] 12345 26937    36254      314      67        0             0 sshd
-[26938] 12345 26938    29286       96      11        0             0 ksh
-[27122] 12345 27122    29494      459      12        0             0 svr05
-[28657]     0 28657    36254      314      74        0             0 sshd
-[28702] 12345 28702    36254      314      72        0             0 sshd
-[28703] 12345 28703    29286       97      11        0             0 ksh
-[28993]     0 28993    36254      314      72        0             0 sshd
-[28996] 12345 28996    29526      531      12        0             0 svr05
-[29006] 12345 29006    36254      314      69        0             0 sshd
-[29007] 12345 29007    29286       96      11        0             0 ksh
-[29110] 12345 29110    29558      745      12        0             0 svr05
-[29481] 12345 29481    29214       58      14        0             0 sed
-[29752] 12345 29752     7522      296      19        0             0 rotatelogs
-Out of memory: Kill process 6576 (mysqld) score 651 or sacrifice child
-Killed process 6576 (mysqld) total-vm:33914892kB, anon-rss:20629004kB, file-rss:0kB, shmem-rss:0kB
+    example_tumbleweed_swap = """\
+[ 5907.004253] MonsterApp invoked oom-killer: gfp_mask=0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_COMP|__GFP_ZERO), order=0, oom_score_adj=0
+[ 5907.004262] CPU: 2 PID: 3271 Comm: MonsterApp Not tainted 6.0.3-1-default #1 openSUSE Tumbleweed 50a6ebc5cb1873d6b9c639843cdd1ed0089a1281
+[ 5907.004266] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+[ 5907.004268] Call Trace:
+[ 5907.004272]  <TASK>
+[ 5907.004275]  dump_stack_lvl+0x44/0x5c
+[ 5907.004282]  dump_header+0x4a/0x1ff
+[ 5907.004286]  oom_kill_process.cold+0xb/0x10
+[ 5907.004290]  out_of_memory+0x1fd/0x4d0
+[ 5907.004295]  __alloc_pages_slowpath.constprop.0+0xcb0/0xe00
+[ 5907.004303]  __alloc_pages+0x218/0x240
+[ 5907.004308]  __folio_alloc+0x17/0x50
+[ 5907.004311]  ? policy_node+0x51/0x70
+[ 5907.004314]  vma_alloc_folio+0x88/0x300
+[ 5907.004318]  __handle_mm_fault+0x946/0xfa0
+[ 5907.004324]  handle_mm_fault+0xae/0x290
+[ 5907.004327]  do_user_addr_fault+0x1ba/0x690
+[ 5907.004332]  exc_page_fault+0x66/0x150
+[ 5907.004337]  asm_exc_page_fault+0x22/0x30
+[ 5907.004340] RIP: 0033:0x4011c1
+[ 5907.004347] Code: Unable to access opcode bytes at RIP 0x401197.
+[ 5907.004348] RSP: 002b:00007ffc77b3e4d0 EFLAGS: 00010206
+[ 5907.004351] RAX: 00007f1d0508d000 RBX: 00007ffc77b3e608 RCX: 00007f2793922ca7
+[ 5907.004353] RDX: 0000000115bfcff0 RSI: 0000000000000000 RDI: 0000000000000000
+[ 5907.004354] RBP: 00007ffc77b3e4f0 R08: 00000000ffffffff R09: 0000000000000000
+[ 5907.004356] R10: 00007ffc77b3e490 R11: 0000000000000202 R12: 0000000000000000
+[ 5907.004357] R13: 00007ffc77b3e618 R14: 0000000000403de0 R15: 00007f2793a8b000
+[ 5907.004362]  </TASK>
+[ 5907.004363] Mem-Info:
+[ 5907.004366] active_anon:65916 inactive_anon:861964 isolated_anon:0
+                active_file:121 inactive_file:511 isolated_file:0
+                unevictable:2024 dirty:16 writeback:34
+                slab_reclaimable:6584 slab_unreclaimable:10454
+                mapped:28 shmem:2167 pagetables:2902 bounce:0
+                kernel_misc_reclaimable:0
+                free:26340 free_pcp:0 free_cma:0
+[ 5907.004371] Node 0 active_anon:263664kB inactive_anon:3447856kB active_file:484kB inactive_file:2044kB unevictable:8096kB isolated(anon):0kB isolated(file):0kB mapped:112kB dirty:64kB writeback:136kB shmem:8668kB shmem_thp: 0kB shmem_pmdmapped: 0kB anon_thp: 909312kB writeback_tmp:0kB kernel_stack:3104kB pagetables:11608kB all_unreclaimable? yes
+[ 5907.004377] Node 0 DMA free:14336kB boost:0kB min:128kB low:160kB high:192kB reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:15996kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 5907.004383] lowmem_reserve[]: 0 1946 7904 7904 7904
+[ 5907.004387] Node 0 DMA32 free:40428kB boost:0kB min:16608kB low:20760kB high:24912kB reserved_highatomic:0KB active_anon:316kB inactive_anon:1967132kB active_file:32kB inactive_file:36kB unevictable:0kB writepending:320kB present:2077504kB managed:2011712kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 5907.004393] lowmem_reserve[]: 0 0 5957 5957 5957
+[ 5907.004397] Node 0 Normal free:50596kB boost:0kB min:50844kB low:63552kB high:76260kB reserved_highatomic:0KB active_anon:263100kB inactive_anon:1480748kB active_file:304kB inactive_file:1876kB unevictable:8096kB writepending:64kB present:6291456kB managed:1914680kB mlocked:80kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 5907.004413] lowmem_reserve[]: 0 0 0 0 0
+[ 5907.004420] Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB 0*1024kB 1*2048kB (M) 3*4096kB (M) = 14336kB
+[ 5907.004433] Node 0 DMA32: 82*4kB (UME) 32*8kB (UME) 40*16kB (UME) 12*32kB (UE) 19*64kB (U) 14*128kB (UME) 8*256kB (UE) 4*512kB (UE) 31*1024kB (UME) 0*2048kB 0*4096kB = 40456kB
+[ 5907.004472] Node 0 Normal: 847*4kB (UME) 652*8kB (UME) 285*16kB (UME) 66*32kB (UME) 53*64kB (UME) 23*128kB (UME) 9*256kB (UE) 5*512kB (UME) 24*1024kB (UM) 0*2048kB 0*4096kB = 51052kB
+[ 5907.004490] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[ 5907.004492] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[ 5907.004494] 293046 total pagecache pages
+[ 5907.004495] 290241 pages in swap cache
+[ 5907.004496] Free swap  = 0kB
+[ 5907.004497] Total swap = 2098152kB
+[ 5907.004498] 2096239 pages RAM
+[ 5907.004499] 0 pages HighMem/MovableOnly
+[ 5907.004500] 1110801 pages reserved
+[ 5907.004500] 0 pages cma reserved
+[ 5907.004501] 0 pages hwpoisoned
+[ 5907.004502] Tasks state (memory values in pages):
+[ 5907.004503] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
+[ 5907.004514] [    557]     0   557    14420      823   110592        7          -250 systemd-journal
+[ 5907.004518] [    561]     0   561     8103      282    81920      274         -1000 systemd-udevd
+[ 5907.004522] [    643]     0   643     2096      604    49152      360             0 haveged
+[ 5907.004525] [    749]     0   749     2828       65    40960        3         -1000 auditd
+[ 5907.004528] [    755]   483   755     2156      241    49152       16          -900 dbus-daemon
+[ 5907.004531] [    757]     0   757    19909       80    53248        3             0 irqbalance
+[ 5907.004533] [    777]     0   777     1542      119    53248       13             0 rngd
+[ 5907.004540] [    782]   478   782   211645      561   151552       22             0 nscd
+[ 5907.004543] [    810]     0   810     4331      280    73728       18             0 systemd-logind
+[ 5907.004546] [    848]     0   848    60288        0    90112      704             0 pcscd
+[ 5907.004549] [    849]     0   849     2384      237    61440       74             0 wickedd-auto4
+[ 5907.004552] [    851]     0   851     2385      108    57344      208             0 wickedd-dhcp4
+[ 5907.004554] [    854]     0   854     2422       63    53248      264             0 wickedd-dhcp6
+[ 5907.004557] [    863]   477   863    58964       99   102400      412             0 polkitd
+[ 5907.004559] [    864]     0   864     2414      131    53248      225             0 wickedd
+[ 5907.004562] [    874]     0   874     2419       62    53248      264             0 wickedd-nanny
+[ 5907.004564] [   1085]   472  1085     3699       36    69632      176             0 vncmanager
+[ 5907.004567] [   1089]     0  1089      803       38    45056        3             0 agetty
+[ 5907.004570] [   1107]     0  1107     3438       49    61440      209         -1000 sshd
+[ 5907.004573] [   1108]   476  1108    21312      176    65536       36             0 chronyd
+[ 5907.004576] [   1146]     0  1146    76363       58    90112      703             0 lightdm
+[ 5907.004578] [   1155]     0  1155    59117      732    94208       22             0 accounts-daemon
+[ 5907.004581] [   1165]     0  1165   204230     4060   450560     3612             0 Xorg.bin
+[ 5907.004583] [   1201]     0  1201    40196      132    90112      640             0 lightdm
+[ 5907.004586] [   1213]  1000  1213     4860      432    77824       71           100 systemd
+[ 5907.004589] [   1214]  1000  1214    26171      715    94208      248           100 (sd-pam)
+[ 5907.004591] [   1221]  1000  1221     1846        0    49152       69             0 icewm-session
+[ 5907.004594] [   1237]  1000  1237     2056       86    49152       11           200 dbus-daemon
+[ 5907.004597] [   1293]  1000  1293     1598      123    45056       14             0 ssh-agent
+[ 5907.004603] [   1294]  1000  1294    38735      595    65536        3             0 gpg-agent
+[ 5907.004606] [   1295]  1000  1295     6143      545    90112      314             0 icewm
+[ 5907.004611] [   1298]  1000  1298     1817       49    45056       37             0 startup
+[ 5907.004614] [   1300]  1000  1300     1192        0    45056       94             0 xscreensaver
+[ 5907.004616] [   1302]  1000  1302     1874        0    57344      103             0 xscreensaver-sy
+[ 5907.004619] [   1584]     0  1584     4143       34    65536      340             0 sshd
+[ 5907.004622] [   1588]  1000  1588     4208       26    65536      418             0 sshd
+[ 5907.004624] [   1590]  1000  1590     2463        0    57344      721             0 bash
+[ 5907.004627] [   1739]     0  1739     4144      271    69632      104             0 sshd
+[ 5907.004629] [   1742]  1000  1742     4209      267    69632      172             0 sshd
+[ 5907.004632] [   1743]  1000  1743     2529      592    57344      190             0 bash
+[ 5907.004635] [   3271]  1000  3271 12207676   624136  9175040   513536             0 MonsterApp
+[ 5907.004638] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-4.scope,task=MonsterApp,pid=3271,uid=1000
+[ 5907.004654] Out of memory: Killed process 3271 (MonsterApp) total-vm:48830704kB, anon-rss:2496540kB, file-rss:4kB, shmem-rss:0kB, UID:1000 pgtables:8960kB oom_score_adj:0
 """
 
-    example_ubuntu2110 = """\
-kworker/0:2 invoked oom-killer: gfp_mask=0xcc0(GFP_KERNEL), order=-1, oom_score_adj=0
-CPU: 0 PID: 735 Comm: kworker/0:2 Not tainted 5.13.0-19-generic #19-Ubuntu
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ArchLinux 1.14.0-1 04/01/2014
-Workqueue: events moom_callback
-Call Trace:
- show_stack+0x52/0x58
- dump_stack+0x7d/0x9c
- dump_header+0x4f/0x1f9
- oom_kill_process.cold+0xb/0x10
- out_of_memory.part.0+0xce/0x270
- out_of_memory+0x41/0x80
- moom_callback+0x7a/0xb0
- process_one_work+0x220/0x3c0
- worker_thread+0x53/0x420
- kthread+0x11f/0x140
- ? process_one_work+0x3c0/0x3c0
- ? set_kthread_struct+0x50/0x50
- ret_from_fork+0x22/0x30
-Mem-Info:
-active_anon:221 inactive_anon:14331 isolated_anon:0
- active_file:18099 inactive_file:22324 isolated_file:0
- unevictable:4785 dirty:633 writeback:0
- slab_reclaimable:6027 slab_unreclaimable:6546
- mapped:15338 shmem:231 pagetables:412 bounce:0
- free:427891 free_pcp:153 free_cma:0
-Node 0 active_anon:884kB inactive_anon:57324kB active_file:72396kB inactive_file:89296kB unevictable:19140kB isolated(anon):0kB isolated(file):0kB mapped:61352kB dirty:2532kB writeback:0kB shmem:924kB shmem_thp: 0kB shmem_pmdmapped: 0kB anon_thp: 0kB writeback_tmp:0kB kernel_stack:1856kB pagetables:1648kB all_unreclaimable? no
-Node 0 DMA free:15036kB min:352kB low:440kB high:528kB reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:15992kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
-lowmem_reserve[]: 0 1893 1893 1893 1893
-Node 0 DMA32 free:1696528kB min:44700kB low:55872kB high:67044kB reserved_highatomic:0KB active_anon:884kB inactive_anon:57324kB active_file:72396kB inactive_file:89296kB unevictable:19140kB writepending:2532kB present:2080640kB managed:2010036kB mlocked:19140kB bounce:0kB free_pcp:612kB local_pcp:612kB free_cma:0kB
-lowmem_reserve[]: 0 0 0 0 0
-Node 0 DMA: 1*4kB (U) 1*8kB (U) 1*16kB (U) 1*32kB (U) 0*64kB 1*128kB (U) 0*256kB 1*512kB (U) 0*1024kB 1*2048kB (M) 3*4096kB (M) = 15036kB
-Node 0 DMA32: 0*4kB 4*8kB (UM) 25*16kB (UME) 151*32kB (UM) 56*64kB (UM) 21*128kB (ME) 36*256kB (UME) 47*512kB (UM) 41*1024kB (UM) 32*2048kB (UM) 377*4096kB (UM) = 1696528kB
-Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
-42845 total pagecache pages
-0 pages in swap cache
-Swap cache stats: add 0, delete 0, find 0/0
-Free swap  = 0kB
-Total swap = 0kB
-524158 pages RAM
-0 pages HighMem/MovableOnly
-17809 pages reserved
-0 pages hwpoisoned
-Tasks state (memory values in pages):
-[  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
-[    323]     0   323     9458     2766    77824        0          -250 systemd-journal
-[    356]     0   356     5886     1346    69632        0         -1000 systemd-udevd
-[    507]     0   507    70208     4646    98304        0         -1000 multipathd
-[    542]   101   542    21915     1391    69632        0             0 systemd-timesyn
-[    587]   102   587     4635     1882    73728        0             0 systemd-network
-[    589]   103   589     5875     2951    86016        0             0 systemd-resolve
-[    602]     0   602     1720      322    53248        0             0 cron
-[    603]   104   603     2159     1168    53248        0          -900 dbus-daemon
-[    608]     0   608     7543     4677    94208        0             0 networkd-dispat
-[    609]   107   609    55313     1248    73728        0             0 rsyslogd
-[    611]     0   611   311571     8248   221184        0          -900 snapd
-[    613]     0   613     3404     1668    65536        0             0 systemd-logind
-[    615]     0   615    98223     3142   126976        0             0 udisksd
-[    620]     0   620     1443      278    45056        0             0 agetty
-[    623]     0   623     1947     1147    57344        0             0 login
-[    650]     0   650     3283     1683    65536        0         -1000 sshd
-[    651]     0   651    27005     5232   106496        0             0 unattended-upgr
-[    661]     0   661    58546     1812    90112        0             0 polkitd
-[    856]  1000   856     3789     2157    73728        0             0 systemd
-[    857]  1000   857    25433      835    86016        0             0 (sd-pam)
-[    862]  1000   862     2208     1373    53248        0             0 bash
-[    876]  1000   876     2870     1356    57344        0             0 sudo
-[    877]     0   877     1899     1052    53248        0             0 bash
-oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/system.slice/unattended-upgrades.service,task=unattended-upgr,pid=651,uid=0
-Out of memory: Killed process 651 (unattended-upgr) total-vm:108020kB, anon-rss:8380kB, file-rss:12548kB, shmem-rss:0kB, UID:0 pgtables:104kB oom_score_adj:0
+    example_tumbleweed_noswap = """\
+[ 1400.080118] MonsterApp invoked oom-killer: gfp_mask=0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_COMP|__GFP_ZERO), order=0, oom_score_adj=0
+[ 1400.080125] CPU: 0 PID: 1978 Comm: MonsterApp Not tainted 6.0.3-1-default #1 openSUSE Tumbleweed 50a6ebc5cb1873d6b9c639843cdd1ed0089a1281
+[ 1400.080128] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+[ 1400.080129] Call Trace:
+[ 1400.080132]  <TASK>
+[ 1400.080135]  dump_stack_lvl+0x44/0x5c
+[ 1400.080141]  dump_header+0x4a/0x1ff
+[ 1400.080152]  oom_kill_process.cold+0xb/0x10
+[ 1400.080154]  out_of_memory+0x1fd/0x4d0
+[ 1400.080159]  __alloc_pages_slowpath.constprop.0+0xcb0/0xe00
+[ 1400.080165]  __alloc_pages+0x218/0x240
+[ 1400.080168]  __folio_alloc+0x17/0x50
+[ 1400.080171]  ? policy_node+0x51/0x70
+[ 1400.080173]  vma_alloc_folio+0x88/0x300
+[ 1400.080176]  __handle_mm_fault+0x946/0xfa0
+[ 1400.080180]  handle_mm_fault+0xae/0x290
+[ 1400.080183]  do_user_addr_fault+0x1ba/0x690
+[ 1400.080188]  exc_page_fault+0x66/0x150
+[ 1400.080191]  asm_exc_page_fault+0x22/0x30
+[ 1400.080194] RIP: 0033:0x4011c1
+[ 1400.080198] Code: Unable to access opcode bytes at RIP 0x401197.
+[ 1400.080199] RSP: 002b:00007ffccb028980 EFLAGS: 00010206
+[ 1400.080201] RAX: 00007fd7c06c9000 RBX: 00007ffccb028ab8 RCX: 00007fe28a591ca7
+[ 1400.080203] RDX: 00000000da5c9ff0 RSI: 0000000000000000 RDI: 0000000000000000
+[ 1400.080206] RBP: 00007ffccb0289a0 R08: 00000000ffffffff R09: 0000000000000000
+[ 1400.080207] R10: 00007ffccb028940 R11: 0000000000000202 R12: 0000000000000000
+[ 1400.080208] R13: 00007ffccb028ac8 R14: 0000000000403de0 R15: 00007fe28a6fa000
+[ 1400.080212]  </TASK>
+[ 1400.080213] Mem-Info:
+[ 1400.080214] active_anon:970 inactive_anon:927725 isolated_anon:0
+                active_file:50 inactive_file:0 isolated_file:0
+                unevictable:2024 dirty:20 writeback:0
+                slab_reclaimable:6559 slab_unreclaimable:10354
+                mapped:0 shmem:2277 pagetables:2516 bounce:0
+                kernel_misc_reclaimable:0
+                free:26295 free_pcp:0 free_cma:0
+[ 1400.080218] Node 0 active_anon:3880kB inactive_anon:3710900kB active_file:200kB inactive_file:0kB unevictable:8096kB isolated(anon):0kB isolated(file):0kB mapped:0kB dirty:80kB writeback:0kB shmem:9108kB shmem_thp: 0kB shmem_pmdmapped: 0kB anon_thp: 3178496kB writeback_tmp:0kB kernel_stack:3360kB pagetables:10064kB all_unreclaimable? yes
+[ 1400.080222] Node 0 DMA free:14336kB boost:0kB min:128kB low:160kB high:192kB reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:15996kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 1400.080226] lowmem_reserve[]: 0 1946 7904 7904 7904
+[ 1400.080229] Node 0 DMA32 free:40272kB boost:0kB min:16608kB low:20760kB high:24912kB reserved_highatomic:0KB active_anon:140kB inactive_anon:1968716kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:2077504kB managed:2011712kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 1400.080233] lowmem_reserve[]: 0 0 5957 5957 5957
+[ 1400.080236] Node 0 Normal free:50572kB boost:0kB min:50844kB low:63552kB high:76260kB reserved_highatomic:0KB active_anon:3740kB inactive_anon:1741752kB active_file:0kB inactive_file:356kB unevictable:8096kB writepending:80kB present:6291456kB managed:1914680kB mlocked:80kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 1400.080240] lowmem_reserve[]: 0 0 0 0 0
+[ 1400.080243] Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB 0*1024kB 1*2048kB (M) 3*4096kB (M) = 14336kB
+[ 1400.080259] Node 0 DMA32: 71*4kB (UME) 65*8kB (UME) 42*16kB (UE) 37*32kB (UE) 40*64kB (UME) 28*128kB (UME) 9*256kB (UME) 5*512kB (UME) 4*1024kB (UME) 1*2048kB (M) 5*4096kB (M) = 40292kB
+[ 1400.080294] Node 0 Normal: 730*4kB (UME) 110*8kB (UME) 339*16kB (UE) 213*32kB (UE) 91*64kB (UME) 43*128kB (UME) 13*256kB (UME) 5*512kB (UE) 17*1024kB (UM) 0*2048kB 0*4096kB = 50664kB
+[ 1400.080323] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[ 1400.080324] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[ 1400.080340] 2378 total pagecache pages
+[ 1400.080341] 0 pages in swap cache
+[ 1400.080341] Free swap  = 0kB
+[ 1400.080342] Total swap = 0kB
+[ 1400.080343] 2096239 pages RAM
+[ 1400.080343] 0 pages HighMem/MovableOnly
+[ 1400.080344] 1110801 pages reserved
+[ 1400.080344] 0 pages cma reserved
+[ 1400.080345] 0 pages hwpoisoned
+[ 1400.080346] Tasks state (memory values in pages):
+[ 1400.080346] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
+[ 1400.080357] [    557]     0   557    14420      828   110592        0          -250 systemd-journal
+[ 1400.080360] [    561]     0   561     8103      556    81920        0         -1000 systemd-udevd
+[ 1400.080363] [    643]     0   643     2096      964    49152        0             0 haveged
+[ 1400.080365] [    749]     0   749     2828       60    40960        0         -1000 auditd
+[ 1400.080367] [    755]   483   755     2156      256    49152        1          -900 dbus-daemon
+[ 1400.080369] [    757]     0   757    19909       83    53248        0             0 irqbalance
+[ 1400.080371] [    776]     0   776    20107       61    49152        0             0 qemu-ga
+[ 1400.080373] [    777]     0   777     1542      132    53248        0             0 rngd
+[ 1400.080374] [    782]   478   782   211645      580   151552        0             0 nscd
+[ 1400.080377] [    810]     0   810     4331      298    73728        0             0 systemd-logind
+[ 1400.080393] [    848]     0   848    60288      688    90112        0             0 pcscd
+[ 1400.080395] [    849]     0   849     2384      311    61440        0             0 wickedd-auto4
+[ 1400.080397] [    851]     0   851     2385      316    57344        0             0 wickedd-dhcp4
+[ 1400.080399] [    854]     0   854     2422      312    53248        0             0 wickedd-dhcp6
+[ 1400.080400] [    863]   477   863    58964      509   102400        1             0 polkitd
+[ 1400.080402] [    864]     0   864     2414      355    53248        0             0 wickedd
+[ 1400.080404] [    874]     0   874     2419      326    53248        0             0 wickedd-nanny
+[ 1400.080406] [   1080]     0  1080     7081      408    86016        0             0 cupsd
+[ 1400.080407] [   1081]   458  1081   305359     7251   286720        0             0 matterbridge
+[ 1400.080409] [   1082]   456  1082   179448     2603   110592        0             0 node_exporter
+[ 1400.080411] [   1085]   472  1085     3699      212    69632        0             0 vncmanager
+[ 1400.080413] [   1089]     0  1089      803       29    45056        0             0 agetty
+[ 1400.080414] [   1107]     0  1107     3438      258    61440        0         -1000 sshd
+[ 1400.080416] [   1108]   476  1108    21312      212    65536        0             0 chronyd
+[ 1400.080418] [   1146]     0  1146    76363      761    90112        0             0 lightdm
+[ 1400.080420] [   1155]     0  1155    59117      748    94208        1             0 accounts-daemon
+[ 1400.080422] [   1165]     0  1165   204230     7672   450560        0             0 Xorg.bin
+[ 1400.080424] [   1201]     0  1201    40196      772    90112        0             0 lightdm
+[ 1400.080425] [   1213]  1000  1213     4860      503    77824        0           100 systemd
+[ 1400.080427] [   1214]  1000  1214    26171      963    94208        0           100 (sd-pam)
+[ 1400.080429] [   1221]  1000  1221     1846       64    49152        0             0 icewm-session
+[ 1400.080431] [   1237]  1000  1237     2056       97    49152        0           200 dbus-daemon
+[ 1400.080433] [   1293]  1000  1293     1598      137    45056        0             0 ssh-agent
+[ 1400.080434] [   1294]  1000  1294    38735       92    65536        0             0 gpg-agent
+[ 1400.080436] [   1295]  1000  1295     6143      859    90112        0             0 icewm
+[ 1400.080438] [   1298]  1000  1298     1817       86    45056        0             0 startup
+[ 1400.080439] [   1300]  1000  1300     1192       88    45056        0             0 xscreensaver
+[ 1400.080441] [   1302]  1000  1302     1874      101    57344        0             0 xscreensaver-sy
+[ 1400.080443] [   1584]     0  1584     4143      374    65536        0             0 sshd
+[ 1400.080447] [   1588]  1000  1588     4208      444    65536        0             0 sshd
+[ 1400.080448] [   1590]  1000  1590     2463      709    57344        0             0 bash
+[ 1400.080450] [   1739]     0  1739     4144      375    69632        0             0 sshd
+[ 1400.080452] [   1742]  1000  1742     4209      439    69632        0             0 sshd
+[ 1400.080453] [   1743]  1000  1743     2463      718    53248        0             0 bash
+[ 1400.080455] [   1978]  1000  1978 12207676   894428  7221248        0             0 MonsterApp
+[ 1400.080457] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-4.scope,task=MonsterApp,pid=1978,uid=1000
+[ 1400.080469] Out of memory: Killed process 1978 (MonsterApp) total-vm:48830704kB, anon-rss:3577708kB, file-rss:4kB, shmem-rss:0kB, UID:1000 pgtables:7052kB oom_score_adj:0
 """
 
     sorted_column_number = None
@@ -4510,11 +4505,11 @@ Out of memory: Killed process 651 (unattended-upgr) total-vm:108020kB, anon-rss:
             )
             element.firstChild.textContent = "col {}".format(i + 1)
 
-    def copy_example_rhel7_to_form(self):
-        document.getElementById("textarea_oom").value = self.example_rhel7
+    def copy_example_tumbleweed_swap_to_form(self):
+        document.getElementById("textarea_oom").value = self.example_tumbleweed_swap
 
-    def copy_example_ubuntu_to_form(self):
-        document.getElementById("textarea_oom").value = self.example_ubuntu2110
+    def copy_example_tumbleweed_noswap_to_form(self):
+        document.getElementById("textarea_oom").value = self.example_tumbleweed_noswap
 
     def reset_form(self):
         document.getElementById("textarea_oom").value = ""
